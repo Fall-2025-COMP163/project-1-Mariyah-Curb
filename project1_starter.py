@@ -150,7 +150,7 @@ def display_character(character):
     print(f"Health: {character['health']}")
     print(f"Gold: {character['gold']}")
     print("==========================\n")
-    
+    # doesnt need to return anything
     pass
 
 def level_up(character):
@@ -161,6 +161,12 @@ def level_up(character):
     """
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
+    character["level"] += 1
+    updated = calculate_stats(character["class"], character["level"])
+    character.update(updated)
+    character["gold"] += 50  # reward for leveling up
+    
+    return character
     pass
 
 # Main program area (optional - for testing your functions)
@@ -173,3 +179,19 @@ if __name__ == "__main__":
     # display_character(char)
     # save_character(char, "my_character.txt")
     # loaded = load_character("my_character.txt")
+    name = input("Enter your character's name: ").strip()
+    print("Choose a class: Warrior, Mage, Rogue, or Cleric")
+    char_class = input("Enter class: ").strip().title()
+
+    char = create_character(name, char_class)
+    display_character(char)
+
+    save_character(char, "saved_character.txt")
+    print("Character saved!")
+
+    print("Leveling up...")
+    char = level_up(char)
+    display_character(char)
+
+    save_character(char, "saved_character.txt")
+    print("Updated character saved again.")
