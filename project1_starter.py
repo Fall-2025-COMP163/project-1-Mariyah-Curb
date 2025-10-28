@@ -4,7 +4,8 @@ Name: Mariyah Curb
 Date: 10/28/25
 
 AI Usage: [Document any AI assistance used]
-Ai automatically named and described each of my commits. 
+Ai automatically named and described almost all of my commits. 
+used gemini to debug where my indentation errors
 """
 
 def create_character(name, character_class):
@@ -24,8 +25,8 @@ def create_character(name, character_class):
         "Cleric": {"strength": 5, "magic": 8, "health": 12} # 25
     }
 # The rogue sucks and warrior too op number noted for possible rebalancing 
-    char_info = base_stats[character_class]
-    stats = {
+    stats= base_stats[character_class]
+    character = {
         "name": name,
         "class": character_class,
         "level": 1,
@@ -35,7 +36,7 @@ def create_character(name, character_class):
         "gold": 250
     }
 
-    return stats
+    return character
 
     
     
@@ -93,13 +94,13 @@ def save_character(character, filename):
     # TODO: Implement this function
     # Remember to handle file errors gracefully
     with open(filename, "w") as file:
-        file.write(f"Character Name: {stats['name']}\n")
-        file.write(f"Class: {stats['class']}\n")
-        file.write(f"Level: {stats['level']}\n")
-        file.write(f"Strength: {stats['strength']}\n")
-        file.write(f"Magic: {stats['magic']}\n")
-        file.write(f"Health: {stats['health']}\n")
-        file.write(f"Gold: {stats['gold']}\n")
+        file.write(f"Character Name: {character['name']}\n")
+        file.write(f"Class: {character['class']}\n")
+        file.write(f"Level: {character['level']}\n")
+        file.write(f"Strength: {character['strength']}\n")
+        file.write(f"Magic: {character['magic']}\n")
+        file.write(f"Health: {character['health']}\n")
+        file.write(f"Gold: {character['gold']}\n")
         
     pass
 
@@ -108,6 +109,7 @@ def load_character(filename):
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
+    character = {}
     with open(filename, "r") as file:
         for line in file:
             key, value = line.strip().split(": ")
@@ -142,13 +144,13 @@ def display_character(stats):
     """
     # TODO: Implement this function
     print(f"\n=== CHARACTER SUMMARY ===")
-    print(f"Name: {stats['name']}")
-    print(f"Class: {stats['class']}")
-    print(f"Level: {stats['level']}")
-    print(f"Strength: {stats['strength']}")
-    print(f"Magic: {stats['magic']}")
-    print(f"Health: {stats['health']}")
-    print(f"Gold: {stats['gold']}")
+    print(f"Name: {character['name']}")
+    print(f"Class: {character['class']}")
+    print(f"Level: {character['level']}")
+    print(f"Strength: {character['strength']}")
+    print(f"Magic: {character['magic']}")
+    print(f"Health: {character['health']}")
+    print(f"Gold: {character['gold']}")
     print("==========================\n")
     # doesnt need to return anything
     pass
@@ -162,7 +164,7 @@ def level_up(stats):
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
     stats["level"] += 1
-    updated = calculate_stats(stats["class"], stats["level"])
+    updated = calculate_stats(character["class"], character["level"])
     stats.update(updated)
     stats["gold"] += 50  # reward for leveling up
     
@@ -195,3 +197,7 @@ if __name__ == "__main__":
 
     save_character(char, "saved_character.txt")
     print("Updated character saved again.")
+"""
+Errors That were in my code
+
+Indentation Errors causing nested loops and regular loops to run incorrectly
