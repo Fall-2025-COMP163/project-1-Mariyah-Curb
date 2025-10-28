@@ -6,41 +6,39 @@ Date: 10/28/25
 AI Usage: [Document any AI assistance used]
 Ai (Copilot) automatically named and described almost all of my commits. 
 used gemini to debug where my indentation errors
+Use Chatgpt to debug broken functions (incorrect naming and improper use of variables)
 """
+import os
 
 def create_character(name, character_class):
     """
     Creates a new character dictionary with calculated stats
-    Returns: dictionary with keys: name, class, level, strength, magic, health, gold
-
-    Example:
-    char = create_character("Aria", "Mage")
-    # Create dictionary for the base stats of a chracter depending on class
     """
+    # Normalize class capitalization
+    character_class = character_class.title()
 
-    base_stats = {
-        "Warrior": {"strength": 10, "magic": 2, "health": 15}, # 27
-        "Mage": {"strength": 3, "magic": 10, "health": 8}, # 21
-        "Rogue": {"strength": 6, "magic": 5, "health": 7}, # 18
-        "Cleric": {"strength": 5, "magic": 8, "health": 12} # 25
-    }
-    # The rogue sucks and warrior too op number noted for possible rebalancing 
-    stats = base_stats[character_class]
+    # Validate class
+    valid_classes = {"Warrior", "Mage", "Rogue", "Cleric"}
+    if character_class not in valid_classes:
+        raise ValueError(f"Invalid class: {character_class}")
+
+    # Use calculate_stats so scaling logic is centralized
+    strength, magic, health = calculate_stats(character_class, 1)
 
     character = {
         "name": name,
         "class": character_class,
         "level": 1,
-        "strength": stats["strength"],
-        "magic": stats["magic"],
-        "health": stats["health"],
+        "strength": strength,
+        "magic": magic,
+        "health": health,
         "gold": 250
     }
     return character
 
 
 
-# Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
+# Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 250}
 
 # Remember to use calculate_stats() function for stat calculation
 pass
@@ -60,24 +58,28 @@ Design your own formulas! Ideas:
 
 #store the character stats then use them to calculate over level/ data
 def calculate_stats(character_class, level):
+    """
+    Calculates base stats based on class and level
+    Returns: tuple of (strength, magic, health)
+    """
     base = {
-    "Warrior": {"strength": 10, "magic": 2, "health": 15},
-    "Mage": {"strength": 3, "magic": 10, "health": 8},
-    "Rogue": {"strength": 6, "magic": 5, "health": 7},
-    "Cleric": {"strength": 5, "magic": 8, "health": 12}
+        "Warrior": {"strength": 10, "magic": 2, "health": 15},
+        "Mage":    {"strength": 3,  "magic": 10,"health": 8},
+        "Rogue":   {"strength": 6,  "magic": 5, "health": 7},
+        "Cleric":  {"strength": 5,  "magic": 8, "health": 12}
     }
-    base_stats = base[character_class]
+
     if character_class not in base:
-        return none
-    #used AI for this cause what in the world is "raise"
+        raise ValueError(f"Invalid class: {character_class}")
 
-    
-    scaled_strength = base_stats["strength"] + (level - 1) * 2,
-    scaled_magic = base_stats["magic"] + (level - 1) * 2,
-    scaled_health = base_stats["health"] + (level - 1) * 5
-    
+    base_stats = base[character_class]
 
-    return (scaled_strength, scaled_magic, scaled_health)
+    # Example scaling formula — adjust as you like
+    scaled_strength = base_stats["strength"] + (level - 1) * 2
+    scaled_magic   = base_stats["magic"]   + (level - 1) * 2
+    scaled_health  = base_stats["health"]  + (level - 1) * 5
+
+    return (int(scaled_strength), int(scaled_magic), int(scaled_health))
 # TODO: Implement this function
 # Return a tuple: (strength, magic, health)
 pass
@@ -85,20 +87,15 @@ pass
 def save_character(character, filename):
     """
     Saves character to text file in specific format
-    Returns: True if successful, False if error occurred
-
-    Required file format:
-    Character Name: [name]
-    Class: [class]
-    Level: [level]
-    Strength: [strength]
-    Magic: [magic]
-    Health: [health]
-    Gold: [gold]
+    Returns: True if successful, False if error occurred (e.g. directory doesn't exist)
     """
-    # TODO: Implement this function
-    # Remember to handle file errors gracefully
-    with open(filename, "w") as file:
+    # If a directory is provided and it doesn't exist, return False rather than raising
+    dirpath = os.path.dirname(filename)
+    if dirpath and not os.path.exists(dirpath):
+        return False
+
+    # Write file
+    with open(filename, "w", encoding="utf-8") as file:
         file.write(f"Character Name: {character['name']}\n")
         file.write(f"Class: {character['class']}\n")
         file.write(f"Level: {character['level']}\n")
@@ -106,10 +103,8 @@ def save_character(character, filename):
         file.write(f"Magic: {character['magic']}\n")
         file.write(f"Health: {character['health']}\n")
         file.write(f"Gold: {character['gold']}\n")
-    if None in file:
-        return False
-    else:
-        return True
+
+    return True
     
     
 pass
@@ -119,12 +114,37 @@ def load_character(filename):
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
+    if not os.path.exists(filename):
+        return None
+
     character = {}
-    with open(filename, "r") as file:
+    with open(filename, "r", encoding="utf-8") as file:
         for line in file:
-            key, value = line.strip().split(": ")
-            if key in ["Level", "Strength", "Magic", "Health", "Gold"]:
-                value = int(value)
+            # split only on the first ": " in case values contain ":"
+            parts = line.strip().split(": ", 1)
+            if len(parts) != 2:
+                continue
+            key, value = parts
+            if key == "Character Name":
+                character["name"] = value
+            elif key == "Class":
+                character["class"] = value
+            elif key == "Level":
+                character["level"] = int(value)
+            elif key == "Strength":
+                character["strength"] = int(value)
+            elif key == "Magic":
+                character["magic"] = int(value)
+            elif key == "Health":
+                character["health"] = int(value)
+            elif key == "Gold":
+                character["gold"] = int(value)
+
+    # If any required key missing, return None (or you could raise)
+    required = ["name", "class", "level", "strength", "magic", "health", "gold"]
+    if not all(k in character for k in required):
+        return None
+
     return {
         "name": character["name"],
         "class": character["class"],
@@ -166,17 +186,18 @@ def display_character(character):
 # doesnt need to return anything
 pass
 
+
 def level_up(character):
     """
     Increases character level and recalculates stats
     Modifies the character dictionary directly
     Returns: None
     """
-    # TODO: Implement this function
-    # Remember to recalculate stats for the new level
     character["level"] += 1
-    updated = calculate_stats(character["class"], character["level"])
-    character.update(updated)
+    strength, magic, health = calculate_stats(character["class"], character["level"])
+    character["strength"] = strength
+    character["magic"] = magic
+    character["health"] = health
     character["gold"] += 50  # reward for leveling up
 
     return character
