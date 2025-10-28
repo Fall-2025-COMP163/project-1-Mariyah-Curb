@@ -71,13 +71,13 @@ def calculate_stats(character_class, level):
         return none
     #used AI for this cause what in the world is "raise"
 
-    scaled_stats = {
-        "strength": base_stats["strength"] + (level - 1) * 2,
-        "magic": base_stats["magic"] + (level - 1) * 2,
-        "health": base_stats["health"] + (level - 1) * 5
-    }
+    
+    scaled_strength = base_stats["strength"] + (level - 1) * 2,
+    scaled_magic = base_stats["magic"] + (level - 1) * 2,
+    scaled_health = base_stats["health"] + (level - 1) * 5
+    
 
-    return scaled_stats
+    return (scaled_strength, scaled_magic, scaled_health)
 # TODO: Implement this function
 # Return a tuple: (strength, magic, health)
 pass
@@ -106,6 +106,10 @@ def save_character(character, filename):
         file.write(f"Magic: {character['magic']}\n")
         file.write(f"Health: {character['health']}\n")
         file.write(f"Gold: {character['gold']}\n")
+    if None in file:
+        return False
+    else:
+        return True
     
     
 pass
