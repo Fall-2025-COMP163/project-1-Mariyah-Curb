@@ -40,13 +40,13 @@ def create_character(name, character_class):
     
     
     # Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
-    """
-    # TODO: Implement this function
+
     # Remember to use calculate_stats() function for stat calculation
     pass
-
+   """
 def calculate_stats(character_class, level):
-    """
+ 
+    
     Calculates base stats based on class and level
     Returns: tuple of (strength, magic, health)
     
@@ -56,6 +56,22 @@ def calculate_stats(character_class, level):
     - Rogues: Medium strength, medium magic, low health
     - Clerics: Medium strength, high magic, high health
     """
+
+#store the character stats then use them to calculate over level/ data
+    def calculated_stats(character_class, level):
+        base = {
+        "Warrior": {"strength": 10, "magic": 2, "health": 15},
+        "Mage": {"strength": 3, "magic": 10, "health": 8},
+        "Rogue": {"strength": 6, "magic": 5, "health": 7},
+        "Cleric": {"strength": 5, "magic": 8, "health": 12}
+    }
+        base_stats = base[character_class]
+    scaled_stats = {
+        "strength": base_stats["strength"] + (level - 1) * 2,
+        "magic": base_stats["magic"] + (level - 1) * 2,
+        "health": base_stats["health"] + (level - 1) * 5
+    }
+    return scaled_stats
     # TODO: Implement this function
     # Return a tuple: (strength, magic, health)
     pass
