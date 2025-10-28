@@ -108,6 +108,19 @@ def load_character(filename):
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
+    with open(filename, "r") as file:
+        for line in file:
+            key, value = line.strip().split(": ")
+
+    return {
+        "name": character["name"],
+        "class": character["class"],
+        "level": character["level"],
+        "strength": character["strength"],
+        "magic": character["magic"],
+        "health": character["health"],
+        "gold": character["gold"]
+    }
     # TODO: Implement this function
     # Remember to handle file not found errors
     pass
@@ -128,6 +141,16 @@ def display_character(character):
     Gold: 100
     """
     # TODO: Implement this function
+    print(f"\n=== CHARACTER SUMMARY ===")
+    print(f"Name: {character['name']}")
+    print(f"Class: {character['class']}")
+    print(f"Level: {character['level']}")
+    print(f"Strength: {character['strength']}")
+    print(f"Magic: {character['magic']}")
+    print(f"Health: {character['health']}")
+    print(f"Gold: {character['gold']}")
+    print("==========================\n")
+    
     pass
 
 def level_up(character):
