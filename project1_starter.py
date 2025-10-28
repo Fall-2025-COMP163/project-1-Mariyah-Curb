@@ -4,7 +4,7 @@ Name: Mariyah Curb
 Date: 10/28/25
 
 AI Usage: [Document any AI assistance used]
-Example: AI helped with file I/O error handling logic in save_character function
+Ai automatically named and described each of my commits. 
 """
 
 def create_character(name, character_class):
