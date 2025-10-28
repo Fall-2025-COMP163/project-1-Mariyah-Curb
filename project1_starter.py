@@ -4,7 +4,7 @@ Name: Mariyah Curb
 Date: 10/28/25
 
 AI Usage: [Document any AI assistance used]
-Ai automatically named and described almost all of my commits. 
+Ai (Copilot) automatically named and described almost all of my commits. 
 used gemini to debug where my indentation errors
 """
 
@@ -25,17 +25,16 @@ def create_character(name, character_class):
         "Cleric": {"strength": 5, "magic": 8, "health": 12} # 25
     }
 # The rogue sucks and warrior too op number noted for possible rebalancing 
-    stats= base_stats[character_class]
+    stats = base_stats[character_class]
     character = {
         "name": name,
         "class": character_class,
         "level": 1,
-        "strength": char_info["strength"],
-        "magic": char_info["magic"],
-        "health": char_info["health"],
+        "strength": stats["strength"],
+        "magic": stats["magic"],
+        "health": stats["health"],
         "gold": 250
     }
-
     return character
 
     
@@ -59,7 +58,7 @@ def calculate_stats(character_class, level):
     """
 
 #store the character stats then use them to calculate over level/ data
-    def calculated_stats(character_class, level):
+def calculated_stats(character_class, level):
         base = {
         "Warrior": {"strength": 10, "magic": 2, "health": 15},
         "Mage": {"strength": 3, "magic": 10, "health": 8},
@@ -115,19 +114,19 @@ def load_character(filename):
             key, value = line.strip().split(": ")
 
     return {
-        "name": stats["name"],
-        "class": stats["class"],
-        "level": stats["level"],
-        "strength": stats["strength"],
-        "magic": stats["magic"],
-        "health": stats["health"],
-        "gold": stats["gold"]
+        "name": charactr["name"],
+        "class": character["class"],
+        "level": character["level"],
+        "strength": character["strength"],
+        "magic": character["magic"],
+        "health": character["health"],
+        "gold": character["gold"]
     }
     # TODO: Implement this function
     # Remember to handle file not found errors
     pass
 
-def display_character(stats):
+def display_character(character):
     """
     Prints formatted character sheet
     Returns: None (prints to console)
@@ -155,7 +154,7 @@ def display_character(stats):
     # doesnt need to return anything
     pass
 
-def level_up(stats):
+def level_up(character):
     """
     Increases character level and recalculates stats
     Modifies the character dictionary directly
