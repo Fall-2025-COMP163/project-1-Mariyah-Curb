@@ -29,9 +29,9 @@ def create_character(name, character_class):
         "name": name,
         "class": character_class,
         "level": 1,
-        "strength": stats["strength"],
-        "magic": stats["magic"],
-        "health": stats["health"],
+        "strength": char_info["strength"],
+        "magic": char_info["magic"],
+        "health": char_info["health"],
         "gold": 250
     }
 
@@ -93,13 +93,13 @@ def save_character(character, filename):
     # TODO: Implement this function
     # Remember to handle file errors gracefully
     with open(filename, "w") as file:
-        file.write(f"Character Name: {character['name']}\n")
-        file.write(f"Class: {character['class']}\n")
-        file.write(f"Level: {character['level']}\n")
-        file.write(f"Strength: {character['strength']}\n")
-        file.write(f"Magic: {character['magic']}\n")
-        file.write(f"Health: {character['health']}\n")
-        file.write(f"Gold: {character['gold']}\n")
+        file.write(f"Character Name: {stats['name']}\n")
+        file.write(f"Class: {stats['class']}\n")
+        file.write(f"Level: {stats['level']}\n")
+        file.write(f"Strength: {stats['strength']}\n")
+        file.write(f"Magic: {stats['magic']}\n")
+        file.write(f"Health: {stats['health']}\n")
+        file.write(f"Gold: {stats['gold']}\n")
         
     pass
 
@@ -113,19 +113,19 @@ def load_character(filename):
             key, value = line.strip().split(": ")
 
     return {
-        "name": character["name"],
-        "class": character["class"],
-        "level": character["level"],
-        "strength": character["strength"],
-        "magic": character["magic"],
-        "health": character["health"],
-        "gold": character["gold"]
+        "name": stats["name"],
+        "class": stats["class"],
+        "level": stats["level"],
+        "strength": stats["strength"],
+        "magic": stats["magic"],
+        "health": stats["health"],
+        "gold": stats["gold"]
     }
     # TODO: Implement this function
     # Remember to handle file not found errors
     pass
 
-def display_character(character):
+def display_character(stats):
     """
     Prints formatted character sheet
     Returns: None (prints to console)
@@ -142,18 +142,18 @@ def display_character(character):
     """
     # TODO: Implement this function
     print(f"\n=== CHARACTER SUMMARY ===")
-    print(f"Name: {character['name']}")
-    print(f"Class: {character['class']}")
-    print(f"Level: {character['level']}")
-    print(f"Strength: {character['strength']}")
-    print(f"Magic: {character['magic']}")
-    print(f"Health: {character['health']}")
-    print(f"Gold: {character['gold']}")
+    print(f"Name: {stats['name']}")
+    print(f"Class: {stats['class']}")
+    print(f"Level: {stats['level']}")
+    print(f"Strength: {stats['strength']}")
+    print(f"Magic: {stats['magic']}")
+    print(f"Health: {stats['health']}")
+    print(f"Gold: {stats['gold']}")
     print("==========================\n")
     # doesnt need to return anything
     pass
 
-def level_up(character):
+def level_up(stats):
     """
     Increases character level and recalculates stats
     Modifies the character dictionary directly
@@ -161,10 +161,10 @@ def level_up(character):
     """
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
-    character["level"] += 1
-    updated = calculate_stats(character["class"], character["level"])
-    character.update(updated)
-    character["gold"] += 50  # reward for leveling up
+    stats["level"] += 1
+    updated = calculate_stats(stats["class"], stats["level"])
+    stats.update(updated)
+    stats["gold"] += 50  # reward for leveling up
     
     return character
     pass
