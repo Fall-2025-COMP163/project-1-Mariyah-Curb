@@ -115,7 +115,6 @@ def load_character(filename):
     with open(filename, "r") as file:
         for line in file:
             key, value = line.strip().split(": ")
-
     return {
         "name": character["name"],
         "class": character["class"],
@@ -178,31 +177,30 @@ if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
     print("Test your functions here!")
 
-# Example usage:
-# char = create_character("TestHero", "Warrior")
-# display_character(char)
-# save_character(char, "my_character.txt")
-# loaded = load_character("my_character.txt")
-name = input("Enter your character's name: ").strip()
-print("Choose a class: Warrior, Mage, Rogue, or Cleric")
-char_class = input("Enter class: ").strip().title()
+    # Example usage:
+    # char = create_character("TestHero", "Warrior")
+    # display_character(char)
+    # save_character(char, "my_character.txt")
+    # loaded = load_character("my_character.txt")
+    name = input("Enter your character's name: ").strip()
+    print("Choose a class: Warrior, Mage, Rogue, or Cleric")
+    char_class = input("Enter class: ").strip().title()
 
-char = create_character(name, char_class)
-display_character(char)
+    char = create_character(name, char_class)
+    display_character(char)
 
-save_character(char, "saved_character.txt")
-print("Character saved!")
+    save_character(char, "saved_character.txt")
+    print("Character saved!")
 
-print("Leveling up...")
-char = level_up(char)
-display_character(char)
+    print("Leveling up...")
+    char = level_up(char)
+    display_character(char)
 
-save_character(char, "saved_character.txt")
-print("Updated character saved again.")
+    save_character(char, "saved_character.txt")
+    print("Updated character saved again.")
 """
 Errors That were in my code
 
 Indentation Errors causing nested loops and regular loops to run incorrectly
 Bro the indentations were so bad i had to rerun in visual studios to fix the erros so they were highlighted
-Shout out to visual studios i think i was ablw to fix all my errors there
 """
