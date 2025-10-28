@@ -68,7 +68,7 @@ def calculate_stats(character_class, level):
     }
     base_stats = base[character_class]
     if character_class not in base:
-        raise ValueError("Unknown class.")
+        return none
     #used AI for this cause what in the world is "raise"
 
     scaled_stats = {
@@ -106,6 +106,7 @@ def save_character(character, filename):
         file.write(f"Magic: {character['magic']}\n")
         file.write(f"Health: {character['health']}\n")
         file.write(f"Gold: {character['gold']}\n")
+    
     
 pass
 
