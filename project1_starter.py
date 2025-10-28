@@ -59,7 +59,7 @@ Design your own formulas! Ideas:
 """
 
 #store the character stats then use them to calculate over level/ data
-def calculated_stats(character_class, level):
+def calculate_stats(character_class, level):
     base = {
     "Warrior": {"strength": 10, "magic": 2, "health": 15},
     "Mage": {"strength": 3, "magic": 10, "health": 8},
@@ -67,6 +67,9 @@ def calculated_stats(character_class, level):
     "Cleric": {"strength": 5, "magic": 8, "health": 12}
     }
     base_stats = base[character_class]
+    if character_class not in base:
+        raise ValueError("Unknown class.")
+    #used AI for this cause what in the world is "raise"
 
     scaled_stats = {
         "strength": base_stats["strength"] + (level - 1) * 2,
@@ -115,6 +118,8 @@ def load_character(filename):
     with open(filename, "r") as file:
         for line in file:
             key, value = line.strip().split(": ")
+            if key in ["Level", "Strength", "Magic", "Health", "Gold"]:
+                value = int(value)
     return {
         "name": character["name"],
         "class": character["class"],
@@ -165,7 +170,7 @@ def level_up(character):
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
     character["level"] += 1
-    updated = calculated_stats(character["class"], character["level"])
+    updated = calculate_stats(character["class"], character["level"])
     character.update(updated)
     character["gold"] += 50  # reward for leveling up
 
