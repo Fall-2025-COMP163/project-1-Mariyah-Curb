@@ -17,15 +17,16 @@ def create_character(name, character_class):
     char = create_character("Aria", "Mage")
     # Create dictionary for the base stats of a chracter depending on class
     """
-    
+
     base_stats = {
         "Warrior": {"strength": 10, "magic": 2, "health": 15}, # 27
         "Mage": {"strength": 3, "magic": 10, "health": 8}, # 21
         "Rogue": {"strength": 6, "magic": 5, "health": 7}, # 18
         "Cleric": {"strength": 5, "magic": 8, "health": 12} # 25
     }
-# The rogue sucks and warrior too op number noted for possible rebalancing 
+    # The rogue sucks and warrior too op number noted for possible rebalancing 
     stats = base_stats[character_class]
+
     character = {
         "name": name,
         "class": character_class,
@@ -37,50 +38,52 @@ def create_character(name, character_class):
     }
     return character
 
-    
-    
-    # Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
 
-    # Remember to use calculate_stats() function for stat calculation
-    pass
-   """
+
+# Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
+
+# Remember to use calculate_stats() function for stat calculation
+pass
+"""
 def calculate_stats(character_class, level):
- 
-    
-    Calculates base stats based on class and level
-    Returns: tuple of (strength, magic, health)
-    
-    Design your own formulas! Ideas:
-    - Warriors: High strength, low magic, high health
-    - Mages: Low strength, high magic, medium health  
-    - Rogues: Medium strength, medium magic, low health
-    - Clerics: Medium strength, high magic, high health
-    """
+
+
+Calculates base stats based on class and level
+Returns: tuple of (strength, magic, health)
+
+Design your own formulas! Ideas:
+- Warriors: High strength, low magic, high health
+- Mages: Low strength, high magic, medium health  
+- Rogues: Medium strength, medium magic, low health
+- Clerics: Medium strength, high magic, high health
+"""
 
 #store the character stats then use them to calculate over level/ data
 def calculated_stats(character_class, level):
-        base = {
-        "Warrior": {"strength": 10, "magic": 2, "health": 15},
-        "Mage": {"strength": 3, "magic": 10, "health": 8},
-        "Rogue": {"strength": 6, "magic": 5, "health": 7},
-        "Cleric": {"strength": 5, "magic": 8, "health": 12}
+    base = {
+    "Warrior": {"strength": 10, "magic": 2, "health": 15},
+    "Mage": {"strength": 3, "magic": 10, "health": 8},
+    "Rogue": {"strength": 6, "magic": 5, "health": 7},
+    "Cleric": {"strength": 5, "magic": 8, "health": 12}
     }
-        base_stats = base[character_class]
+    base_stats = base[character_class]
+
     scaled_stats = {
         "strength": base_stats["strength"] + (level - 1) * 2,
         "magic": base_stats["magic"] + (level - 1) * 2,
         "health": base_stats["health"] + (level - 1) * 5
     }
+
     return scaled_stats
-    # TODO: Implement this function
-    # Return a tuple: (strength, magic, health)
-    pass
+# TODO: Implement this function
+# Return a tuple: (strength, magic, health)
+pass
 
 def save_character(character, filename):
     """
     Saves character to text file in specific format
     Returns: True if successful, False if error occurred
-    
+
     Required file format:
     Character Name: [name]
     Class: [class]
@@ -100,8 +103,8 @@ def save_character(character, filename):
         file.write(f"Magic: {character['magic']}\n")
         file.write(f"Health: {character['health']}\n")
         file.write(f"Gold: {character['gold']}\n")
-        
-    pass
+    
+pass
 
 def load_character(filename):
     """
@@ -114,7 +117,7 @@ def load_character(filename):
             key, value = line.strip().split(": ")
 
     return {
-        "name": charactr["name"],
+        "name": character["name"],
         "class": character["class"],
         "level": character["level"],
         "strength": character["strength"],
@@ -122,15 +125,15 @@ def load_character(filename):
         "health": character["health"],
         "gold": character["gold"]
     }
-    # TODO: Implement this function
-    # Remember to handle file not found errors
-    pass
+# TODO: Implement this function
+# Remember to handle file not found errors
+pass
 
 def display_character(character):
     """
     Prints formatted character sheet
     Returns: None (prints to console)
-    
+
     Example output:
     === CHARACTER SHEET ===
     Name: Aria
@@ -151,8 +154,8 @@ def display_character(character):
     print(f"Health: {character['health']}")
     print(f"Gold: {character['gold']}")
     print("==========================\n")
-    # doesnt need to return anything
-    pass
+# doesnt need to return anything
+pass
 
 def level_up(character):
     """
@@ -162,41 +165,44 @@ def level_up(character):
     """
     # TODO: Implement this function
     # Remember to recalculate stats for the new level
-    stats["level"] += 1
-    updated = calculate_stats(character["class"], character["level"])
-    stats.update(updated)
-    stats["gold"] += 50  # reward for leveling up
-    
+    character["level"] += 1
+    updated = calculated_stats(character["class"], character["level"])
+    character.update(updated)
+    character["gold"] += 50  # reward for leveling up
+
     return character
-    pass
+pass
 
 # Main program area (optional - for testing your functions)
 if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
     print("Test your functions here!")
-    
-    # Example usage:
-    # char = create_character("TestHero", "Warrior")
-    # display_character(char)
-    # save_character(char, "my_character.txt")
-    # loaded = load_character("my_character.txt")
-    name = input("Enter your character's name: ").strip()
-    print("Choose a class: Warrior, Mage, Rogue, or Cleric")
-    char_class = input("Enter class: ").strip().title()
 
-    char = create_character(name, char_class)
-    display_character(char)
+# Example usage:
+# char = create_character("TestHero", "Warrior")
+# display_character(char)
+# save_character(char, "my_character.txt")
+# loaded = load_character("my_character.txt")
+name = input("Enter your character's name: ").strip()
+print("Choose a class: Warrior, Mage, Rogue, or Cleric")
+char_class = input("Enter class: ").strip().title()
 
-    save_character(char, "saved_character.txt")
-    print("Character saved!")
+char = create_character(name, char_class)
+display_character(char)
 
-    print("Leveling up...")
-    char = level_up(char)
-    display_character(char)
+save_character(char, "saved_character.txt")
+print("Character saved!")
 
-    save_character(char, "saved_character.txt")
-    print("Updated character saved again.")
+print("Leveling up...")
+char = level_up(char)
+display_character(char)
+
+save_character(char, "saved_character.txt")
+print("Updated character saved again.")
 """
 Errors That were in my code
 
 Indentation Errors causing nested loops and regular loops to run incorrectly
+Bro the indentations were so bad i had to rerun in visual studios to fix the erros so they were highlighted
+Shout out to visual studios i think i was ablw to fix all my errors there
+"""
