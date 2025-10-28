@@ -20,7 +20,7 @@ def create_character(name, character_class):
     # Validate class
     valid_classes = {"Warrior", "Mage", "Rogue", "Cleric"}
     if character_class not in valid_classes:
-        raise ValueError(f"Invalid class: {character_class}")
+        return None
 
     # Use calculate_stats so scaling logic is centralized
     strength, magic, health = calculate_stats(character_class, 1)
