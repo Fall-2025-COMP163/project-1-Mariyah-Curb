@@ -7,6 +7,7 @@ AI Usage: [Document any AI assistance used]
 Ai (Copilot) automatically named and described almost all of my commits. 
 used gemini to debug where my indentation errors
 Use Chatgpt to debug broken functions (incorrect naming and improper use of variables)
+used gemini for help with encoding
 """
 import os
 
@@ -70,7 +71,7 @@ def calculate_stats(character_class, level):
     }
 
     if character_class not in base:
-        raise ValueError(f"Invalid class: {character_class}")
+       return None
 
     base_stats = base[character_class]
 
@@ -79,7 +80,7 @@ def calculate_stats(character_class, level):
     scaled_magic   = base_stats["magic"]   + (level - 1) * 2
     scaled_health  = base_stats["health"]  + (level - 1) * 5
 
-    return (int(scaled_strength), int(scaled_magic), int(scaled_health))
+    return (int(scaled_strength), int(scaled_magic), int(scaled_health)) # Makes this s tuple
 # TODO: Implement this function
 # Return a tuple: (strength, magic, health)
 pass
@@ -112,7 +113,7 @@ pass
 def load_character(filename):
     """
     Loads character from text file
-    Returns: character dictionary if successful, None if file not found
+    Returns: character dictionary if successful, returns None if file not found
     """
     if not os.path.exists(filename):
         return None
@@ -234,4 +235,7 @@ Errors That were in my code
 
 Indentation Errors causing nested loops and regular loops to run incorrectly
 Bro the indentations were so bad i had to rerun in visual studios to fix the erros so they were highlighted
+confusion with encoding
+display VS print
+value and type errors
 """
